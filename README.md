@@ -9,7 +9,9 @@
 
 To conduct timings test on tools type `make`
 
-To plot timings (assumes test complete), type `make plot`
+To plot all timings (assumes test complete), type `make plot`
+
+To plot a subset of the timings (10^1 to 10^4), type `make subset`
 
 ## Available tools
 
@@ -28,4 +30,3 @@ To plot timings (assumes test complete), type `make plot`
 * o5000000.owx
 * o10000000.owx
 * o20000000.owx
-
