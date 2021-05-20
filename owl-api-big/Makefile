@@ -41,4 +41,4 @@ o10000000.owx:
 ## This file comes in at over 1Gb which seems a nice round number to
 ## stop at.
 o20000000.owx:
-	$(CMD) out/20000000 > o2000000.owx
+	$(CMD) out/20000000 > out/o2000000.owx
