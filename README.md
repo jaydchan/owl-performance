@@ -2,8 +2,18 @@
 
 ## Requirements
 
+* bash
 * java (8)
 * python3
+
+## Constants
+
+* Outfile (OUT) -> time.csv
+* Infile (INA) -> all.txt (generated) - list of all jobs
+* Infile (INR) -> order.txt (generated) - list of all jobs in random order
+* Available tools (see below)
+* Available coommnads (see below)
+* Number of iterations (MAX) -> 2 by default
 
 ## Usage
 
