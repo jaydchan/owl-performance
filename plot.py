@@ -1,8 +1,9 @@
 from statistics import mean
 import matplotlib.pyplot as plt
+import argparse
 
 
-def plot_line_plot(lines):
+def plot_line_plot(lines, subset=False):
     """Create line plot and display results for each tool"""
  
     # for each line
@@ -13,6 +14,10 @@ def plot_line_plot(lines):
       
         # for each coord
         for x, y in sorted(coords):
+            # if subset then stop early
+            if x > 100000 and subset:
+                break
+            # add xand y values to lists
             x_vals.append(x)
             y_vals.append(y)
 
@@ -21,6 +26,13 @@ def plot_line_plot(lines):
 
     # plot x on a log scale
     plt.xscale("log")
+
+    # add labels
+    plt.xlabel("Size of ontology (number of classes)")
+    plt.ylabel("Average time taken (seconds)")
+
+    # add title
+    plt.title("Line plot comparing owl manipulation tools")
         
     # show legend
     plt.legend()
@@ -31,6 +43,12 @@ def plot_line_plot(lines):
 
 if __name__ == "__main__":
     """Main method"""
+
+    # parser for optional argument subset
+    parser = argparse.ArgumentParser(description='Plot line plot.')
+    parser.add_argument('--subset', action="store_true",
+                        help='create a plot of 10^1 to 10^4')
+    args = parser.parse_args()
 
     # read in file
     f = open("times.csv", "r")
@@ -59,5 +77,5 @@ if __name__ == "__main__":
         lines[tool] = lines.get(tool, []) + [( size, time )]
 
     # plot line plot
-    plot_line_plot(lines)
+    plot_line_plot(lines, args.subset)
 
