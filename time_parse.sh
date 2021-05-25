@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Adapted from
+# https://www.golinuxcloud.com/get-script-execution-time-command-bash-script/
+# https://linuxhint.com/bash_split_examples/
+
+# CONSTANTS
+# filepaths
+PWD=$(pwd)
+OUT=$PWD/times_parse.csv
+INA=$PWD/all_parse.txt
+INR=$PWD/order_parse.txt
+# list of tools
+TOOLS=("horned-parse" "owl-api-parse")
+# COMMANDS=("go.owx" "ncbitaxon.owx")
+COMMANDS=("go.owx")
+# number of iterations
+MAX=2
+
+# clean files
+rm $INA $INR $OUT
+touch $INA
+touch $OUT
+
+# clean tool directories
+for tool in ${TOOLS[@]}
+do
+    cd $tool
+    make
+    cd ..
+done
+
+# generate in file
+for tool in ${TOOLS[@]}
+do
+    for command in ${COMMANDS[@]}
+    do
+        for (( i=1; i<=$MAX; i++ ))
+        do
+            echo "$tool $command" >> $INA
+        done
+    done
+done
+
+# shuffle in file
+shuf $INA > $INR
+
+# for each line of in file
+while read line
+do
+    # Set space as the delimiter
+    IFS=' '
+
+    # Read the split words into an array based on space delimiter
+    read -a strarr <<< "$line"
+
+    # get tool and command
+    tool=${strarr[0]}
+    size=${strarr[1]}
+
+    # move into directory
+    cd $tool 
+    
+    # get time
+    start=$(date +%s.%N)
+
+    # run make
+    make $size
+
+    # calc time
+    duration=$(echo "$(date +%s.%N) - $start" | bc)
+    execution_time=`printf "%.2f seconds" $duration`
+    
+    # output to file
+    echo "$tool,$size,$execution_time" >> $OUT
+    
+    # go back
+    cd ..
+
+    # sleep 2 secs
+    sleep 2
+    
+done < $INR
