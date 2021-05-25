@@ -10,6 +10,9 @@ clean:
 time:
 	./time.sh > performance.log
 
+continue:
+	./time.sh 1 >> performance.log
+
 plot:
 	python3 plot.py
 
