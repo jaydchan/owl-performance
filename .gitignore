@@ -1,5 +1,5 @@
 *.txt
-times.csv
+*.csv
 *.log
 */out/
 *~
