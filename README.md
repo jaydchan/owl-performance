@@ -5,12 +5,17 @@
 * bash
 * java (8)
 * python3
+* [robot](http://robot.obolibrary.org/)
 
 ## Usage
 
-To conduct timings test on tools type `make`
+To setup and download necessary resources type `make`
 
-To plot all timings (assumes test complete), type `make plot`
+To conduct big timings test on tools type `make big`
+
+To conduct parse timings test on tools type `make parse`
+
+To plot all timings (assumes complete), type `make plot`
 
 To plot a subset of the timings (10^1 to 10^4), type `make subset`
 
@@ -25,10 +30,10 @@ To plot a subset of the timings (10^1 to 10^4), type `make subset`
 
 ## Available tools
 
-* horned-big, part of [horned-owl](https://github.com/phillord/horned-owl)
-* [owl-api-big](https://github.com/jaydchan/owl-api-big), which uses [owl-api](https://github.com/owlcs/owlapi)
+* horned-big and horned-parse, part of [horned-owl](https://github.com/phillord/horned-owl)
+* [owl-api-big](https://github.com/jaydchan/owl-api-big) and [owl-api-parse](https://github.com/jaydchan/owl-api-parse), which uses [owl-api](https://github.com/owlcs/owlapi)
 
-## Additional make commands
+## Additional make big commands
 
 * o10.owx
 * o100.owx
@@ -40,3 +45,8 @@ To plot a subset of the timings (10^1 to 10^4), type `make subset`
 * o5000000.owx
 * o10000000.owx
 * o20000000.owx
+
+## Additional make parse commands
+
+* go.owl and go.owx
+* ncbitaxon.owl and ncbitaxon.owx
