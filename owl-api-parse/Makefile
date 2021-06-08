@@ -12,3 +12,9 @@ go.owl:
 
 go.owx:
 	$(CMD) $(RSC)/go.owx 2>/dev/null
+
+ncbitaxon.owl:
+	$(CMD) $(RSC)/$ncbitaxon.owl 2>/dev/null
+
+ncbitaxon.owx:
+	$(CMD) $(RSC)/ncbitaxon.owx 2>/dev/null
