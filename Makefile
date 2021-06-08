@@ -15,3 +15,6 @@ plot:
 
 subset:
 	python3 plot.py --subset
+
+boxplots:
+	python3 plot.py --boxplots
