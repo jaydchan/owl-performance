@@ -1,6 +1,8 @@
 from statistics import mean
 import matplotlib.pyplot as plt
 import argparse
+import collections
+import numpy as np
 
 
 def plot_line_plot(lines, subset=False):
@@ -24,8 +26,9 @@ def plot_line_plot(lines, subset=False):
         # plot line
         plt.plot(x_vals, y_vals, label=line)
 
-    # plot x on a log scale
+    # plot x and y on a log scale
     plt.xscale("log")
+    plt.yscale("log")
 
     # add labels
     plt.xlabel("Size of ontology (number of classes)")
@@ -39,7 +42,48 @@ def plot_line_plot(lines, subset=False):
         
     # display plot
     plt.show()
-            
+
+def plot_box_plots(data):
+    """Create box plots and display results for each tool"""
+
+    # parse data
+    boxes = {}
+    for ((tool, size), time) in sorted(data.items()):
+        boxes[size] = boxes.get(size, []) + [( tool, time )]
+
+    # create n subplots
+    fig1, ax1 = plt.subplots(1, len(boxes))
+
+    # initialise index
+    i = 0
+
+    # for each size
+    for size, d in boxes.items():
+        # get labels and points
+        labels = []
+        points = []
+        for tool, times in d:
+            labels = labels + [tool]
+            points = points + [times]
+
+        # create box plots
+        ax1[i].boxplot(points)
+
+        # set title of subplot
+        ax1[i].set_title(size)
+
+        # set labels
+        ax1[i].set_xticklabels(labels, rotation=45)
+
+        # increment index
+        i = i + 1
+
+    # add title
+    plt.suptitle("Box plots showing the outliers for each size and tool")
+
+    # display plot
+    plt.show()
+
 
 if __name__ == "__main__":
     """Main method"""
@@ -48,6 +92,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Plot line plot.')
     parser.add_argument('--subset', action="store_true",
                         help='create a plot of 10^1 to 10^4')
+    parser.add_argument('--boxplots', action="store_true",
+                        help='create boxplots')
     args = parser.parse_args()
 
     # read in file
@@ -67,6 +113,10 @@ if __name__ == "__main__":
         time = float(time[:-8])
         # update dictionary
         data[(tool, size)] = data.get((tool, size), []) + [time]
+
+    # plot box plots
+    if args.boxplots:
+        plot_box_plots(data)
 
     # calc average
     data = { key : mean(times)  for (key, times) in data.items() }
