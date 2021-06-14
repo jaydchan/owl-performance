@@ -13,6 +13,9 @@ big:
 parse:
 	./time_parse.sh > parse.log
 
+cont-parse:
+	./time_parse.sh 1 >> parse.log
+
 plot:
 	python3 plot.py
 
