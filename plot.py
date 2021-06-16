@@ -1,13 +1,14 @@
 from statistics import mean
 import matplotlib.pyplot as plt
 import argparse
+import numpy as np
 
 
 def plot_line_plot(lines, subset=False):
     """Create line plot and display results for each tool"""
  
     # for each line
-    for line, coords in lines.items():
+    for line, coords in sorted(lines.items()):
         # initialise lists
         x_vals = []
         y_vals = []
@@ -41,31 +42,53 @@ def plot_line_plot(lines, subset=False):
     plt.show()
 
 
-def plot_bar_graph(data):
+def plot_bar_graph(bars):
+    """Create bar plot and display results for each ontology and tool"""
 
-    # initialise lists
-    x_vals = []
-    y_vals = []
+    # Adapted from https://www.datasciencemadesimple.com/bar-plot-bar-chart-in-python-legend-using-matplotlib/
+    # define pos and bar_width
+    pos = np.arange(len(bars))
+    bar_width = 0.3
 
-    # for each item
-    for ((tool, version), y) in sorted(data.items()):
+    # initialise counter
+    i = 0
 
-        # combine tool and version to create label
-        x = "{} - {}".format(tool[:-6],version[3:])
+    # for each tool
+    for tool, times in sorted(bars.items()):
 
-        # add x and y values to lists
-        x_vals.append(x)
-        y_vals.append(y)
+        # initialise list
+        x_vals = []
 
-    # plot bar chart
-    plt.bar(x_vals, y_vals)
+        # for each ontology
+        for ont, time in sorted(times):
+            # add x value to list
+            x_vals.append(time)
 
-    # add labels
-    plt.xlabel("Tool and version used")
+        # plot bars
+        plt.bar(pos+(bar_width*i),x_vals,bar_width)
+
+        # increment counter
+        i=i+1
+
+    # isolate ontologies for x ticks
+    onts = [ont for (ont, time) in list(bars.values())[0]]
+        
+    # set x ticks
+    mid = pos+((bar_width*(i-1))/2)
+    plt.xticks(mid, onts)
+        
+    # add axis labels
+    plt.xlabel("Ontology version used")
     plt.ylabel("Average time taken (seconds)")
 
     # add title
     plt.title("Bar plot comparing owl manipulation tools")
+
+    # isolate tools for legend
+    tools = sorted(bars.keys())
+
+    # show legend
+    plt.legend(tools,loc=2)
 
     # display plot
     plt.show()
@@ -128,5 +151,10 @@ if __name__ == "__main__":
     # calc average
     data = { key : mean(times)  for (key, times) in data.items() }
 
+    # parse data (could be embedded in plot_line_plot?)
+    bars = {}
+    for ((tool, ont), time) in data.items():
+        bars[tool] = bars.get(tool, []) + [(ont, time)]
+
     # plot bar graph
-    plot_bar_graph(data)
+    plot_bar_graph(bars)
