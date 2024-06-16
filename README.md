@@ -60,8 +60,6 @@ To generate bar chart for all read (parse) timings (assumes time-parse complete)
 * go.owx
 * ncbitaxon.owl
 * ncbitaxon.owx
-* snomedct.owl
-* snomedct.owx
 
 ## Additional make commands (for resources)
 
