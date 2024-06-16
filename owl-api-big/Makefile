@@ -7,6 +7,7 @@ out:
 	- mkdir out
 
 CMD=java -jar owl-api-big-1.0-SNAPSHOT-jar-with-dependencies.jar
+MCMD=java -Xms1G -Xmx10G -jar owl-api-big-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 test: out
 	$(CMD) 5 > out/test.owl
@@ -41,4 +42,7 @@ o10000000.owx:
 ## This file comes in at over 1Gb which seems a nice round number to
 ## stop at.
 o20000000.owx:
-	$(CMD) out/20000000 > out/o2000000.owx
+	$(CMD) 20000000 > out/o2000000.owx
+
+more-o20000000.owx:
+	$(MCMD) 20000000 > out/o2000000.owx
