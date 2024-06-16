@@ -4,3 +4,9 @@
 */out/
 *~
 *.png
+venv/
+bfo.ow*
+chebi.ow*
+go.ow*
+ncbitaxon.ow*
+temp/
