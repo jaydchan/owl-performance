@@ -7,6 +7,7 @@ out:
 	- mkdir out
 	
 CMD=java -jar owl-api-parse-1.0-SNAPSHOT-jar-with-dependencies.jar
+LCMD=systemd-run --user --scope -p MemorySwapMax=0M
 RSC=../resources
 
 test: out
@@ -37,10 +38,27 @@ ncbitaxon.owl:
 ncbitaxon.owx:
 	$(CMD) $(RSC)/ncbitaxon.owx > out/ncbitaxon_owx.owx
 	
-snomedct.owl:
-	$(CMD) $(RSC)/snomedct.owl > out/snomedct.owx
+limit-bfo.owl:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/bfo.owl > out/bfo_owl.owx
 
-snomedct.owx:
-	$(CMD) $(RSC)/snomedct.owx > out/snomedct.owx
+limit-bfo.owx:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/bfo.owx > out/bfo_owx.owx
 
+limit-chebi.owl:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/chebi.owl > out/chebi_owl.owx
+
+limit-chebi.owx:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/chebi.owx > out/chebi_owx.owx
+
+limit-go.owl:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/go.owl > out/go_owl.owx
+
+limit-go.owx:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/go.owx > out/go_owx.owx
+
+limit-ncbitaxon.owl:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/ncbitaxon.owl > out/ncbitaxon_owl.owx
+
+limit-ncbitaxon.owx:
+	$(LCMD) -p MemoryMax=$(var) $(CMD) $(RSC)/ncbitaxon.owx > out/ncbitaxon_owx.owx
 
