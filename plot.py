@@ -7,7 +7,7 @@ import numpy as np
 
 def plot_line_plot(lines, subset=False):
     """Create line plot and display results for each tool"""
- 
+
     # for each line
     for line, coords in lines.items():
         # initialise lists
@@ -40,8 +40,9 @@ def plot_line_plot(lines, subset=False):
     # show legend
     plt.legend()
         
-    # display plot
-    plt.show()
+    # save plot
+    plt.savefig("plot.png")
+
 
 def plot_box_plots(data):
     """Create box plots and display results for each tool"""
@@ -81,8 +82,8 @@ def plot_box_plots(data):
     # add title
     plt.suptitle("Box plots showing the outliers for each size and tool")
 
-    # display plot
-    plt.show()
+    # save plot
+    plt.savefig("boxplots.png")
 
 
 if __name__ == "__main__":
@@ -117,15 +118,14 @@ if __name__ == "__main__":
     # plot box plots
     if args.boxplots:
         plot_box_plots(data)
+    else:
+        # calc average
+        data = { key : mean(times) for (key, times) in data.items() }
 
-    # calc average
-    data = { key : mean(times)  for (key, times) in data.items() }
+        # parse data
+        lines = {}
+        for ((tool, size), time) in data.items():
+            lines[tool] = lines.get(tool, []) + [( size, time )]
 
-    # parse data
-    lines = {}
-    for ((tool, size), time) in data.items():
-        lines[tool] = lines.get(tool, []) + [( size, time )]
-
-    # plot line plot
-    plot_line_plot(lines, args.subset)
-
+        # plot line plot
+        plot_line_plot(lines, args.subset)
