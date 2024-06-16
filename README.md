@@ -3,16 +3,21 @@
 ## Requirements
 
 * bash
-* java (8)
-* python3
+* java (21)
+* python3 (3.12)
+* [robot](http://robot.obolibrary.org/)
 
 ## Usage
 
-To conduct timings test on tools type `make`
+To conduct timings test on write (big) tools type `make time`
 
-To plot all timings (assumes test complete), type `make plot`
+To generate line plot for all write timings (assumes time complete), type `make plot`
 
-To plot a subset of the timings (10^1 to 10^4), type `make subset`
+To generate box plots for all write timings (assumes time complete), type `make boxplots`
+
+To conduct timings test on read (parse) tools type `make time-parse`
+
+To generate bar chart for all read (parse) timings (assumes time-parse complete), type `make barchart`
 
 ## Constants
 
@@ -26,9 +31,13 @@ To plot a subset of the timings (10^1 to 10^4), type `make subset`
 ## Available tools
 
 * horned-big, part of [horned-owl](https://github.com/phillord/horned-owl)
+* horned-parse, part of [horned-owl](https://github.com/phillord/horned-owl)
+* py-horned-big, which uses [py-horned-owl](https://github.com/ontology-tools/py-horned-owl)
+* py-horned-parse, which uses [py-horned-owl](https://github.com/ontology-tools/py-horned-owl)
 * [owl-api-big](https://github.com/jaydchan/owl-api-big), which uses [owl-api](https://github.com/owlcs/owlapi)
+* [owl-api-parse](https://github.com/jaydchan/owl-api-parse), which uses [owl-api](https://github.com/owlcs/owlapi)
 
-## Additional make commands
+## Additional make commands (for big tools)
 
 * o10.owx
 * o100.owx
@@ -40,3 +49,48 @@ To plot a subset of the timings (10^1 to 10^4), type `make subset`
 * o5000000.owx
 * o10000000.owx
 * o20000000.owx
+
+## Additional make commands (for parse tools)
+
+* bfo.owl
+* bfo.owx
+* chebi.owl
+* chebi.owx
+* go.owl
+* go.owx
+* ncbitaxon.owl
+* ncbitaxon.owx
+* snomedct.owl
+* snomedct.owx
+
+## Additional make commands (for resources)
+
+Downloads the following ontologies
+
+* bfo
+* chebi
+* go
+* ncbitaxon
+
+## Additional author notes
+
+### How to create horned-big or horned-parse
+
+- git clone horned-owl
+- cargo build --release --bin horned-[TOOLNAME]
+- copy and paste executable into relevant directory
+
+### How to create owl-api-big or owl-api-parse
+
+- git clone owl-api-big or owl-api-parse
+- `make`
+- copy and paste jar (with dependencies) into relevant directory
+
+### Relevant venv commands
+
+Activate venv:
+- `source venv/bin/activate`
+
+Deactivate venv:
+- `deactivate`
+
