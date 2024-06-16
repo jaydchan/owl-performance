@@ -1,4 +1,4 @@
-all: clean time
+all: clean
 
 clean:
 	- rm performance.log
@@ -7,8 +7,14 @@ clean:
 	- rm times.csv
 	- rm *~
 
+clean-png:
+	- rm *.png
+
 time:
 	./time.sh > performance.log
+
+time-parse:
+	./time_parse.sh > performance.log
 
 continue:
 	./time.sh 1 >> performance.log
@@ -21,3 +27,37 @@ subset:
 
 boxplots:
 	python3 plot.py --boxplots
+
+barchart:
+	python3 plot_parse.py
+
+RSC=./resources
+
+clean-bfo:
+	rm $(RSC)/bfo.ow*
+
+clean-chebi:
+	rm $(RSC)/chebi.ow*
+
+clean-go:
+	rm $(RSC)/go.ow*
+
+clean-ncbitaxon:
+	rm $(RSC)/ncbitaxon.ow*
+
+bfo:
+	wget -nc http://purl.obolibrary.org/obo/bfo.owl# -P $(RSC)/
+	robot convert --input $(RSC)/bfo.owl --output $(RSC)/bfo.owx
+
+chebi:
+	wget -nc http://purl.obolibrary.org/obo/chebi.owl# -P $(RSC)/
+	robot convert --input $(RSC)/chebi.owl --output $(RSC)/chebi.owx
+
+go:
+	wget -nc http://purl.obolibrary.org/obo/go.owl# -P $(RSC)/
+	robot convert --input $(RSC)/go.owl --output $(RSC)/go.owx
+
+ncbitaxon:
+	wget -nc http://purl.obolibrary.org/obo/ncbitaxon.owl# -P $(RSC)/
+	robot convert --input $(RSC)/ncbitaxon.owl --output $(RSC)/ncbitaxon.owx
+
