@@ -6,7 +6,6 @@ import os.path
 
 # https://stackoverflow.com/questions/11540854/file-as-command-line-argument-for-argparse-error-message-if-argument-is-not-va
 def is_valid_file(parser, arg):
-    print(arg)
     if not os.path.exists(arg):
         parser.error("The file %s does not exist!" % arg)
     else:
@@ -24,6 +23,8 @@ if __name__ == "__main__":
     # open ontology
     o = pyhornedowl.open_ontology(args.ont_path)
 
-    # TODO should save to stdout rather file
-    o.save_to_file("temp.owx", serialization = "owx")
+    # print success message
+    print("Parse Complete:", args.ont_path)
 
+    # TODO should save to stdout rather file -> for round not parse
+    # o.save_to_file("temp.owx", serialization = "owx")
