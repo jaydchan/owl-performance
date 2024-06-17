@@ -45,6 +45,8 @@ clean-go:
 clean-ncbitaxon:
 	rm $(RSC)/ncbitaxon.ow*
 
+resources: bfo chebi go ncbitaxon
+
 bfo:
 	wget -nc http://purl.obolibrary.org/obo/bfo.owl# -P $(RSC)/
 	robot convert --input $(RSC)/bfo.owl --output $(RSC)/bfo.owx
@@ -60,4 +62,7 @@ go:
 ncbitaxon:
 	wget -nc http://purl.obolibrary.org/obo/ncbitaxon.owl# -P $(RSC)/
 	robot convert --input $(RSC)/ncbitaxon.owl --output $(RSC)/ncbitaxon.owx
+
+create-venv:
+	python3 -m venv venv
 
