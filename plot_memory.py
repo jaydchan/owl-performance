@@ -55,6 +55,7 @@ if __name__ == "__main__":
         i = i + 1
 
     fig.suptitle("Results of limiting the memory")
+    fig.set_tight_layout(True)
     
     # savefig
     plt.savefig("heatmap.png")
