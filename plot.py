@@ -120,7 +120,8 @@ if __name__ == "__main__":
         plot_box_plots(data)
     else:
         # calc average
-        data = { key : mean(times) for (key, times) in data.items() }
+        data = { key : round(mean(times), 1) for (key, times) in sorted(data.items()) }
+        print(data)
 
         # parse data
         lines = {}
