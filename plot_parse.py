@@ -5,6 +5,7 @@ import numpy as np
 
 
 # https://matplotlib.org/stable/gallery/lines_bars_and_markers/barchart.html
+# https://matplotlib.org/stable/gallery/misc/table_demo.html#sphx-glr-gallery-misc-table-demo-py
 if __name__ == "__main__":
     """Main method"""
 
@@ -42,7 +43,7 @@ if __name__ == "__main__":
     for tool in tools:
         for ont in onts:
             bars[tool] = bars.get(tool, []) + [data.get((tool, ont))]
-    # print(bars)    
+    print(bars)
 
     x = np.arange(len(onts))  # the label locations
     width = 0.25  # the width of the bars
@@ -50,19 +51,39 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots(layout='constrained')
 
-    for attribute, measurement in bars.items():
+    cell_text = []
+    for tool, averages in bars.items():
         offset = width * multiplier
-        rects = ax.bar(x + offset, measurement, width, label=attribute)
-        ax.bar_label(rects, padding=3)
+        rects = ax.bar(x + offset, averages, width, label=tool)
+        # TODO -> UC
+        # ax.bar_label(rects, padding=3, rotation=45)
         multiplier += 1
+        # TODO -> C
+        cell_text.append(averages)
+
+    # TODO -> C
+    colors = ["tab:blue", "orange", "green"]
+
+    # TODO -> C
+    # Add a table at the bottom of the Axes
+    the_table = plt.table(cellText=cell_text,
+                          rowLabels=tools,
+                          rowColours=colors,
+                          colLabels=onts,
+                          loc='bottom')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('Average time taken (seconds)')
-    ax.set_xlabel('Ontology version used')
+    # TODO -> UC
+    # ax.set_xlabel('Ontology version used')
     ax.set_title('Bar plot comparing owl manipulation tools')
-    ax.set_xticks(x + width, onts)
-    ax.legend(loc='upper left', ncols=3)
-    ax.set_ylim(0, 250)
+    # TODO -> UC
+    # ax.set_xticks(x + width, onts, rotation=45)
+    # TODO -> C
+    ax.set_xticks([])
+    # TODO -> UC
+    # ax.legend(loc='upper left')
+    ax.set_ylim(0, 2500)
 
     # savefig
     plt.savefig("barchart.png")
