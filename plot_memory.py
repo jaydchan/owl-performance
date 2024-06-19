@@ -15,12 +15,18 @@ if __name__ == "__main__":
     # f.close()
 
     # data
-    data = {"horned-parse" :
-            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [1, 0, 0]],
+    data = {
+            # smallest for bfo.owl is 2M, killed on 1M
+            # max needed for ncbi.taxon is ???
+            "horned-parse" :
+            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 0, 0]],
+            # bfo.owl 50M only runs if you remove the initial heapsize of 1G
+            # smallest for bfo.owl is 44M, killed on 43M
             "owl-api-parse" :
-            [[1, 1, 1], [1, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 0, 0]],
+            # smallest for bfo.owl is 8M, killed on 7M
             "py-horned-parse" :
-            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [1, 0, 0]]}
+            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 0, 0]]}
     ontologies = ["bfo.owl", "go.owl", "chebi.owl", "ncbitaxon.owl"]
     memory = ["5000M", "500M", "50M"]
 
