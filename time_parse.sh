@@ -12,10 +12,10 @@ INR=$PWD/order.txt
 # list of tools
 TOOLS=("horned-parse" "owl-api-parse" "py-horned-parse")
 # list of commands
-# COMMANDS=("bfo" "chebi" "go" "ncbitaxon" "snomedct")
-COMMANDS=("bfo.owl" "bfo.owx" "chebi.owl" "chebi.owx" "go.owl" "go.owx")
+COMMANDS=("bfo.owl" "bfo.owx" "chebi.owl" "chebi.owx" "go.owl" "go.owx" "ncbitaxon.owl" "ncbitaxon.owx")
+# COMMANDS=("bfo.owl" "bfo.owx" "chebi.owl" "chebi.owx" "go.owl" "go.owx")
 # number of iterations
-MAX=2
+MAX=3
 # start from line
 START=0
 

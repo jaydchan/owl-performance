@@ -12,10 +12,10 @@ INR=$PWD/order.txt
 # list of tools
 TOOLS=("horned-big" "owl-api-big" "py-horned-big")
 # list of commands
-# COMMANDS=("o10.owx" "o100.owx" "o1000.owx" "o10000.owx" "o100000.owx" "o1000000.owx" "o2500000.owx" "o5000000.owx" "o10000000.owx" "o20000000.owx")
-COMMANDS=("o10.owx" "o100.owx" "o1000.owx" "o10000.owx")
+COMMANDS=("o10.owx" "o100.owx" "o1000.owx" "o10000.owx" "o100000.owx" "o1000000.owx" "o2500000.owx" "o5000000.owx" "o10000000.owx" "o20000000.owx")
+# COMMANDS=("o10.owx" "o100.owx" "o1000.owx" "o10000.owx")
 # number of iterations
-MAX=2
+MAX=3
 # start from line
 START=0
 

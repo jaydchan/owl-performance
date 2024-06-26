@@ -7,15 +7,20 @@
 * python3 (3.12)
 * [robot](http://robot.obolibrary.org/)
 
+## Python library requirements
+
+* py-horned-owl
+* matplotlib
+
 ## Usage
 
-To conduct timings test on write (big) tools type `make time`
+To conduct timings test on write (big) tools, type `make time`
 
 To generate line plot for all write timings (assumes time complete), type `make plot`
 
 To generate box plots for all write timings (assumes time complete), type `make boxplots`
 
-To conduct timings test on read (parse) tools type `make time-parse`
+To conduct timings test on read (parse) tools, type `make time-parse`
 
 To generate bar chart for all read (parse) timings (assumes time-parse complete), type `make barchart`
 
@@ -26,7 +31,7 @@ To generate bar chart for all read (parse) timings (assumes time-parse complete)
 * Infile (INR) -> order.txt (generated) - list of all jobs in random order
 * Available TOOLS (see below)
 * Available COMMANDS (see below)
-* Number of iterations (MAX) -> 2 by default
+* Number of iterations (MAX) -> 3 by default
 
 ## Available tools
 
@@ -69,6 +74,8 @@ Downloads the following ontologies
 * chebi
 * go
 * ncbitaxon
+
+Use `make resources` to download all ontologies
 
 ## Additional author notes
 
