@@ -16,6 +16,9 @@ time:
 time-parse: resources
 	./time_parse.sh > performance.log
 
+memory: resources
+	./memory.sh > performance.log
+
 continue:
 	./time.sh 1 >> performance.log
 
@@ -30,6 +33,9 @@ boxplots:
 
 barchart:
 	python3 plot_parse.py
+
+plot-memory:
+	python3 plot_memory.py
 
 RSC=./resources
 

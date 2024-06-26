@@ -1,67 +1,90 @@
 from statistics import mean
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import collections
 import numpy as np
 
 
-# https://matplotlib.org/stable/gallery/images_contours_and_fields/image_annotated_heatmap.html
+# https://matplotlib.org/stable/gallery/lines_bars_and_markers/barchart.html
+# https://matplotlib.org/stable/gallery/misc/table_demo.html#sphx-glr-gallery-misc-table-demo-py
 if __name__ == "__main__":
     """Main method"""
 
     # read in file
-    # f = open("times.csv", "r")
-    # lines = f.readlines()
-    # f.close()
+    f = open("times.csv", "r")
+    lines = f.readlines()
+    f.close()
 
-    # data
-    data = {
-            # smallest for bfo.owl is 2M, killed on 1M
-            # max needed for ncbi.taxon is ???
-            "horned-parse" :
-            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 0, 0]],
-            # bfo.owl 50M only runs if you remove the initial heapsize of 1G
-            # smallest for bfo.owl is 44M, killed on 43M
-            "owl-api-parse" :
-            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 0, 0]],
-            # smallest for bfo.owl is 8M, killed on 7M
-            "py-horned-parse" :
-            [[1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 0, 0]]}
-    ontologies = ["bfo.owl", "go.owl", "chebi.owl", "ncbitaxon.owl"]
-    memory = ["5000M", "500M", "50M"]
+    # parse data
+    data = {}
+    # for each line
+    for line in lines:
+        # split line
+        tool, ont, time = line.strip().split(",")
+        # convert to int
+        time = int(time)
+        # update dictionary
+        data[(tool, ont)] = data.get((tool, ont), []) + [time]
+    print(data)
 
-    fig, all_ax = plt.subplots(1, 3)
+    # calc average
+    data = { key : int(round(mean(times), 0)) for (key, times) in data.items() }
+    print(data)
 
-    i = 0
-    for tool, results in data.items():
-        # fig, ax = plt.subplots()
-        ax = all_ax[i]
-        results = np.array(results)
+    # parse data
+    tools = set([ tool for (tool, _) in data.keys() ])
+    tools = sorted(list(tools))
+    print(tools)
 
-        # https://stackoverflow.com/questions/28517400/matplotlib-binary-heat-plot
-        # define the colors
-        cmap = mpl.colors.ListedColormap(['r', 'g'])
-        
-        im = ax.imshow(results, cmap=cmap)
+    # onts = set([ ont for (_, ont) in data.keys() ])
+    # onts = sorted(list(onts))
+    onts = ["bfo.owl", "bfo.owx", "go.owl", "go.owx", "chebi.owl", "chebi.owx"]
+    print(onts)
 
-        # Show all ticks and label them with the respective list entries
-        ax.set_xticks(np.arange(len(memory)), labels=memory)
-        if i == 0:
-            ax.set_yticks(np.arange(len(ontologies)), labels=ontologies)
-        else:
-            ax.set_yticks([])
+    bars = {}
+    for tool in tools:
+        for ont in onts:
+            bars[tool] = bars.get(tool, []) + [data.get((tool, ont))]
+    print(bars)
 
-        # Rotate the tick labels and set their alignment.
-        plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
-                 rotation_mode="anchor")
+    x = np.arange(len(onts))  # the label locations
+    width = 0.25  # the width of the bars
+    multiplier = 0
 
-        ax.set_title(tool)
-        # fig.tight_layout()
+    fig, ax = plt.subplots(layout='constrained')
 
-        i = i + 1
+    cell_text = []
+    for tool, averages in bars.items():
+        offset = width * multiplier
+        rects = ax.bar(x + offset, averages, width, label=tool)
+        # TODO -> UC
+        # ax.bar_label(rects, padding=3, rotation=45)
+        multiplier += 1
+        # TODO -> C
+        cell_text.append(averages)
 
-    fig.suptitle("Results of limiting the memory")
-    fig.set_tight_layout(True)
-    
+    # TODO -> C
+    colors = ["tab:blue", "orange", "green"]
+
+    # TODO -> C
+    # Add a table at the bottom of the Axes
+    the_table = plt.table(cellText=cell_text,
+                          rowLabels=tools,
+                          rowColours=colors,
+                          colLabels=onts,
+                          loc='bottom')
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel('Minimum memory required (MB)')
+    # TODO -> UC
+    # ax.set_xlabel('Ontology version used')
+    ax.set_title('Bar plot comparing owl manipulation tools (memory)')
+    # TODO -> UC
+    # ax.set_xticks(x + width, onts, rotation=45)
+    # TODO -> C
+    ax.set_xticks([])
+    # TODO -> UC
+    # ax.legend(loc='upper left')
+    ax.set_ylim(0, 9000)
+
     # savefig
-    plt.savefig("heatmap.png")
+    plt.savefig("memory.png")
