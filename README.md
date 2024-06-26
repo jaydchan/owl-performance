@@ -24,6 +24,10 @@ To conduct timings test on read (parse) tools, type `make time-parse`
 
 To generate bar chart for all read (parse) timings (assumes time-parse complete), type `make barchart`
 
+To conduct memory test on read (parse) tools, type `make memory`
+
+To generate bar chart for all read (parse) memory results (assumes memory tests complete), type `make plot-memory`
+
 ## Constants
 
 * Outfile (OUT) -> time.csv
