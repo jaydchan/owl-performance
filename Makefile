@@ -13,7 +13,7 @@ clean-png:
 time:
 	./time.sh > performance.log
 
-time-parse:
+time-parse: resources
 	./time_parse.sh > performance.log
 
 continue:
